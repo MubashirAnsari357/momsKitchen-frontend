@@ -21,7 +21,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const ChefAddDish = ({navigation, route}) => {
 
-  const {message, loadindD, error} = useSelector(state=>state.dishes)
+  const {message, loadingD, error} = useSelector(state=>state.dishes)
   const dispatch = useDispatch()
 
   const [name, setName] = useState("");
@@ -269,7 +269,7 @@ const ChefAddDish = ({navigation, route}) => {
         <TouchableOpacity onPress={handleAddDish}
           className="flex-row justify-center space-x-2 items-center p-3 mx-4 rounded-full bg-[#262525] shadow shadow-black"
         >
-          {loadindD ? <ActivityIndicator size="small" color="white" /> : <Text className="text-center font-semibold text-white text-lg">
+          {loadingD ? <ActivityIndicator size="small" color="white" /> : <Text className="text-center font-semibold text-white text-lg">
             Add
           </Text>}
         </TouchableOpacity>

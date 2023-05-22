@@ -1,8 +1,6 @@
 import {
   View,
   FlatList,
-  StyleSheet,
-  Image,
   RefreshControl,
   Text,
 } from "react-native";
@@ -47,7 +45,7 @@ const DishesList = ({ view, dishes, refreshing, onRefresh }) => {
           }
           contentContainerStyle={{
             paddingHorizontal: 6,
-            paddingBottom: 200,
+            paddingBottom: 50,
             paddingTop: 10,
           }}
           data={dishes}
@@ -62,9 +60,10 @@ const DishesList = ({ view, dishes, refreshing, onRefresh }) => {
       {view == "List" && (
         <FlatList
           vertical
-          contentContainerStyle={
-            route.name === "ChefProfile" ? styles.listStyle : styles.listStyle2
-          }
+          contentContainerStyle={{
+            paddingTop: 10,
+            paddingBottom: 70,
+          }}
           data={dishes}
           renderItem={({ item }) => <DishCard dish={item} view={view} />}
           keyExtractor={(item) => item._id}
@@ -93,15 +92,5 @@ const DishesList = ({ view, dishes, refreshing, onRefresh }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  listStyle: {
-    paddingTop: 10,
-    paddingBottom: 250,
-  },
-  listStyle2: {
-    paddingTop: 10,
-    paddingBottom: 150,
-  },
-});
 
 export default DishesList;

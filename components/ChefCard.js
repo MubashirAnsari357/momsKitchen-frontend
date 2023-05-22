@@ -91,7 +91,7 @@ const ChefCard = ({ chef, view }) => {
               userType,
             })
           }
-          className="mx-1 bg-white w-32 my-1 items-center justify-center rounded-2xl shadow shadow-black"
+          className="mx-1 bg-white flex-1 my-1 items-center justify-center rounded-2xl shadow shadow-black"
         >
           <Image
             source={{ uri: photo.url }}

@@ -17,9 +17,10 @@ import mime from "mime";
 import Toast from "react-native-toast-message";
 import AppBar from "../components/AppBar";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { ActivityIndicator } from "react-native";
 
 const ChefEditDish = ({ navigation, route }) => {
-  const { message, loadindD, error } = useSelector((state) => state.dishes);
+  const { message, loadingD, error } = useSelector((state) => state.dishes);
   const dispatch = useDispatch();
 
   const [id] = useState(route?.params._id);
@@ -287,9 +288,9 @@ const ChefEditDish = ({ navigation, route }) => {
           onPress={handleUpdateDish}
           className="flex-row justify-center space-x-2 items-center p-3 mx-4 rounded-full bg-[#262525] shadow shadow-black"
         >
-          <Text className="text-center font-semibold text-white text-lg">
+          {loadingD ? <ActivityIndicator size="small" color="white" /> : <Text className="text-center font-semibold text-white text-lg">
             Update
-          </Text>
+          </Text>}
         </TouchableOpacity>
       </View>
     </>

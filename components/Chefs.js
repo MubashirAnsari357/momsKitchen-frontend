@@ -32,6 +32,7 @@ const Chefs = ({ view, chefs, refreshing, onRefresh }) => {
         contentContainerStyle={{
           paddingTop: 10,
           paddingLeft: 1,
+          paddingBottom: 50,
         }}
         data={chefs}
         renderItem={({ item }) => <ChefCard chef={item} view={view} />}
@@ -47,6 +48,7 @@ const Chefs = ({ view, chefs, refreshing, onRefresh }) => {
         vertical
         contentContainerStyle={{
           paddingTop: 10,
+          paddingBottom: 50,
         }}
         data={chefs}
         renderItem={({ item }) => <ChefCard chef={item} view={view} />}
