@@ -117,7 +117,7 @@ const DishCard = ({ dish, view }) => {
                       photos[0].url
                     )
                   }
-                  className="bg-[#5E72EB] rounded-full items-centers justify-center w-10 h-10 shadow shadow-black"
+                  className={`bg-[#5E72EB] rounded-full items-centers justify-center w-10 h-10 shadow shadow-black ${availableQty < 1 && "opacity-0"}`}
                 >
                   <View className="justify-center items-center">
                     <Ionicons name="add" color="white" size={30} />
@@ -185,7 +185,7 @@ const DishCard = ({ dish, view }) => {
                       photos[0].url
                     )
                   }
-                  className="bg-[#5E72EB] rounded-full items-centers justify-center w-10 h-10 shadow shadow-black"
+                  className={`bg-[#5E72EB] rounded-full items-centers justify-center w-10 h-10 shadow shadow-black ${availableQty < 1 && "opacity-0"}`}
                 >
                   <View className="justify-center items-center">
                     <Ionicons name="add" color="white" size={30} />
@@ -260,7 +260,7 @@ const DishCard = ({ dish, view }) => {
                       photos[0].url
                     )
                   }
-                  className="bg-[#5E72EB] rounded-xl flex-row items-center justify-center py-2 px-3 space-x-1 shadow shadow-black"
+                  className={`bg-[#5E72EB] rounded-xl flex-row items-center justify-center py-2 px-3 space-x-1 shadow shadow-black ${availableQty < 1 && "opacity-0"}`}
                 >
                   <Ionicons name="cart" color="white" size={15} />
                   <Text className="font-bold text-sm text-white">Add</Text>
@@ -329,7 +329,7 @@ const DishCard = ({ dish, view }) => {
                       photos[0].url
                     )
                   }
-                  className="bg-[#5E72EB] rounded-full items-centers justify-center w-9 h-9 shadow shadow-black"
+                  className={`bg-[#5E72EB] rounded-full items-centers justify-center w-9 h-9 shadow shadow-black ${availableQty < 1 && "opacity-0"}`}
                 >
                   <View className="justify-center items-center">
                     <Ionicons name="add" color="white" size={25} />

@@ -286,6 +286,7 @@ const ChefEditDish = ({ navigation, route }) => {
       <View className="absolute bottom-0 z-50 w-full bg-white py-2 shadow-2xl shadow-black">
         <TouchableOpacity
           onPress={handleUpdateDish}
+          disabled={loadingD}
           className="flex-row justify-center space-x-2 items-center p-3 mx-4 rounded-full bg-[#262525] shadow shadow-black"
         >
           {loadingD ? <ActivityIndicator size="small" color="white" /> : <Text className="text-center font-semibold text-white text-lg">

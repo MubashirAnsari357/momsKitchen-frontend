@@ -40,8 +40,6 @@ export const addItem = createAsyncThunk(
 
     const updatedBasket = { items, total };
     await setBasket(userId, updatedBasket);
-    
-    console.log(updatedBasket);
     return updatedBasket;
 
   }
@@ -66,7 +64,6 @@ export const decrementQuantity = createAsyncThunk(
 
     const updatedBasket = { items, total };
     await setBasket(userId, updatedBasket);
-    console.log(updatedBasket);
     return updatedBasket;
   }
 );
@@ -94,7 +91,6 @@ export const removeItem = createAsyncThunk(
 
     const updatedBasket = { items, total };
     await setBasket(userId, updatedBasket);
-    console.log(updatedBasket);
     return updatedBasket;
   }
 );

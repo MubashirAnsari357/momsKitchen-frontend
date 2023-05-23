@@ -24,6 +24,7 @@ import RazorpayCheckout from "react-native-razorpay";
 import { paymentVerification } from "../redux/actions/paymentAction";
 import axios from "axios";
 import { API_URL } from "@env";
+import { Alert } from "react-native";
 
 const Checkout = ({ navigation }) => {
   const [basket, setBasket] = useState({ items: [], total: 0 });
@@ -121,6 +122,7 @@ const Checkout = ({ navigation }) => {
   const [pincode, setPincode] = useState(
     user?.address.pincode ? user?.address.pincode : ""
   );
+  const [loading, setLoading] = useState(false);
 
   const generateOrderId = () => {
     const date = new Date();
@@ -134,7 +136,7 @@ const Checkout = ({ navigation }) => {
   };
 
   const handleCheckout = async (amount) => {
-
+    setLoading(true);
     const {
       data: { key },
     } = await axios.get(`${API_URL}/getkey`);
@@ -152,44 +154,54 @@ const Checkout = ({ navigation }) => {
       city: city,
       pincode: pincode,
     };
-    await dispatch(
-      placeOrder(orderId, basket, deliveryAddress, name, user?.email, phone, basket.total)
+    dispatch(
+      placeOrder(
+        orderId,
+        basket,
+        deliveryAddress,
+        name,
+        user?.email,
+        phone,
+        basket.total
+      )
     );
+    const options = {
+      description: "Mom's Kitchen Payment",
+      image: "../assets/icon.png",
+      currency: "INR",
+      key: key,
+      amount: amount * 100,
+      name: "Mom's Kitchen",
+      order_id: order.id,
+      prefill: {
+        email: user?.email,
+        contact: phone,
+        name: name,
+      },
+      theme: { color: "#262525" },
+    };
+    RazorpayCheckout.open(options)
+      .then((data) => {
+        // handle success
+        dispatch(
+          paymentVerification(
+            orderId,
+            data.razorpay_payment_id,
+            data.razorpay_order_id,
+            data.razorpay_signature
+          )
+        );
+        Alert.alert(
+          "Payment Successfull",
+          `Payment Id: ${data.razorpay_payment_id}`
+        );
+      })
+      .catch((error) => {
+        // handle failure
+        Alert.alert("Error", `Error: ${error.code} | ${error.description}`);
+      });
 
-      const options = {
-        description: "Mom's Kitchen Payment",
-        image: "../assets/icon.png",
-        currency: "INR",
-        key: key,
-        amount: amount * 100,
-        name: "Mom's Kitchen",
-        order_id: order.id,
-        prefill: {
-          email: user?.email,
-          contact: phone,
-          name: name,
-        },
-        theme: { color: "#262525" },
-      };
-      RazorpayCheckout.open(options)
-        .then((data) => {
-          // handle success
-          dispatch(
-            paymentVerification(
-              orderId,
-              data.razorpay_payment_id,
-              data.razorpay_order_id,
-              data.razorpay_signature
-            )
-          );
-          alert(`Success: ${data.razorpay_payment_id}`);
-        })
-        .catch((error) => {
-          // handle failure
-          alert(`Error: ${error.code} | ${error.description}`);
-        });
-    
-
+    setLoading(false);
   };
 
   return (
@@ -276,16 +288,14 @@ const Checkout = ({ navigation }) => {
           </View>
           <TouchableOpacity
             onPress={() => handleCheckout(basket.total)}
-            disabled={basket.items.length < 1}
-            className={`flex-row justify-center space-x-2 items-center p-3 mx-4 mb-2 rounded-full bg-[#5E72EB] shadow shadow-black ${
-              basket.items.length < 1 && "opacity-30"
-            }`}
+            disabled={basket.items.length < 1 || loading}
+            className="flex-row justify-center space-x-2 items-center p-3 mx-4 mb-2 rounded-full bg-[#5E72EB] shadow shadow-black"
           >
-            {loadingO ? (
+            {loading ? (
               <ActivityIndicator size="small" color="white" />
             ) : (
               <Text className="text-center font-semibold text-white text-lg">
-                Proceed To Pay
+                Pay ₹{basket.total}
               </Text>
             )}
           </TouchableOpacity>

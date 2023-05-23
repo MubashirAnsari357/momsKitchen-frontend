@@ -111,7 +111,7 @@ const DishDetails = () => {
         ) : items.findIndex((item) => item._id === _id) !== -1 ? (
           <TouchableOpacity
             onPress={() => navigation.navigate("Basket")}
-            className="flex-row justify-center space-x-2 items-center p-3 mx-6 rounded-2xl bg-[#5E72EB] shadow shadow-black"
+            className={`flex-row justify-center space-x-2 items-center p-3 mx-6 rounded-2xl bg-[#5E72EB] shadow shadow-black ${availableQty < 1 && "opacity-0"}`}
           >
             <Ionicons name="cart" color="white" size={25} />
             <Text className="text-center font-semibold text-white text-lg">
@@ -122,7 +122,7 @@ const DishDetails = () => {
           <TouchableOpacity
           disabled={availableQty<1}
             onPress={addToCart}
-            className="flex-row justify-center space-x-2 items-center p-3 mx-6 rounded-2xl bg-[#5E72EB] shadow shadow-black"
+            className={`flex-row justify-center space-x-2 items-center p-3 mx-6 rounded-2xl bg-[#5E72EB] shadow shadow-black ${availableQty < 1 && "opacity-0"}`}
           >
             <Ionicons name="cart" color="white" size={25} />
             <Text className="text-center font-semibold text-white text-lg">
@@ -205,6 +205,18 @@ const DishDetails = () => {
               ₹{price}
             </Text>
           </View>
+          <ReadMore
+          style={{color: "#6B7280", fontWeight: "500"}}
+            numberOfLines={3}
+            seeLessStyle={{ color: "#5E72EB" }}
+            seeMoreStyle={{ color: "#5E72EB" }}
+          >
+            {desc}
+          </ReadMore>
+          <Text className="font-semibold text-base py-2 -mb-2">
+            Available Quantity:{" "}
+            <Text className={`font-extrabold ${availableQty < 1 && 'text-red-600'}`}>{availableQty}</Text>
+          </Text>
           <TouchableOpacity
             onPress={() =>
               navigation.navigate("ChefProfile", {
@@ -218,7 +230,7 @@ const DishDetails = () => {
                 userType: chef.userType,
               })
             }
-            className="flex-row items-center space-x-4"
+            className="flex-row items-center space-x-4 py-2 active:bg-gray-100 active:-mx-6 active:px-6"
           >
             <Image
               source={{ uri: chef.photo.url }}
@@ -226,17 +238,8 @@ const DishDetails = () => {
             />
             <Text className="font-medium text-lg">{chef.name}</Text>
           </TouchableOpacity>
-          <ReadMore
-            numberOfLines={3}
-            seeLessStyle={{ color: "#5E72EB" }}
-            seeMoreStyle={{ color: "#5E72EB" }}
-          >
-            {desc}
-          </ReadMore>
-          <Text className="font-semibold text-base py-2">
-            Available Quantity:{" "}
-            <Text className="font-normal">{availableQty}</Text>
-          </Text>
+          
+          
 
           <View className="border-b border-gray-300" />
           <View className="space-y-2">
