@@ -4,6 +4,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../redux/basketSlice";
+import { ratingCalc } from "../utils/helper";
 
 const DishCard = ({ dish, view }) => {
   const { user } = useSelector((state) => state.auth);
@@ -31,16 +32,11 @@ const DishCard = ({ dish, view }) => {
   } = dish;
 
   useEffect(() => {
-    setFeedbackCount(feedbacks.length);
-    setReviewsCount(
-      feedbacks.filter((feedback) => feedback.feedbackDesc !== "").length
-    );
-    const totalRating = feedbacks.reduce(
-      (acc, feedback) => acc + feedback.rating,
-      0
-    );
-    setAvgRating((totalRating / feedbackCount || 0).toFixed(1));
-  }, [feedbackCount, reviewsCount]);
+    const { feedbackCountCalc, reviewsCountCalc, avgRatingCalc } = ratingCalc(feedbacks);
+    setFeedbackCount(feedbackCountCalc);
+    setReviewsCount(reviewsCountCalc);
+    setAvgRating(avgRatingCalc);
+  }, [feedbackCount, reviewsCount, avgRating]);
 
   const addToBasket = (_id, name, chefName, chefId, price, photo) => {
     if (availableQty > 0) {
@@ -276,18 +272,6 @@ const DishCard = ({ dish, view }) => {
           onPress={() =>
             navigation.navigate("DishDetails", {
               _id,
-              chef,
-              name,
-              desc,
-              cuisine,
-              availableQty,
-              type,
-              price,
-              photos,
-              feedbacks,
-              avgRating,
-              reviewsCount,
-              feedbackCount,
             })
           }
           className="ml-3 my-1 bg-white w-36 items-center justify-start rounded-3xl shadow shadow-black"

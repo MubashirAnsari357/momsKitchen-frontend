@@ -81,7 +81,7 @@ const Settings = () => {
           </TouchableOpacity>
 
         {/* Log-out */}
-        {loadingA && <ActivityIndicator size="large" color="#5E72EB"/>}
+        {loadingA && <Loading />}
 
         {isAuthenticated && !loadingA && <TouchableOpacity onPress={handleLogout} className="flex-row space-x-4 items-center px-4 py-3 m-1 rounded-xl active:shadow-md active:shadow-black active:bg-white">
           <Ionicons name="log-out-outline" color='red' size={30} />

@@ -19,6 +19,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import axios from "axios";
 import { API_URL } from "@env";
 import PaymentStatus from "../components/PaymentStatus";
+import Loading from "../components/Loading";
 
 const OrderDetails = ({ route, navigation }) => {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
@@ -62,9 +63,7 @@ const OrderDetails = ({ route, navigation }) => {
     <SafeAreaView className="flex-1 bg-slate-50">
       <AppBar title="Order Details" />
       {loading ? (
-        <View className="flex-1 justify-center items-center">
-          <ActivityIndicator color="#262525" size="large" />
-        </View>
+        <Loading />
       ) : (
         <ScrollView
           refreshControl={

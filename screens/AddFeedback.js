@@ -49,7 +49,7 @@ const AddFeedback = ({ navigation, route }) => {
         text1: message,
       });
       dispatch({ type: "clearMessage" });
-      navigation.navigate('Home')
+      navigation.navigate('DishDetails', {_id: dishId})
     }
     if (error) {
       Toast.show({
