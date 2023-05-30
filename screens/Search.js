@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   Image,
+  Keyboard,
 } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -16,14 +17,16 @@ import Loading from "../components/Loading";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Search = ({ navigation, route }) => {
+
   const { searchDishes, loadingD } = useSelector((state) => state.dishes);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
+  
+  const [isSearching, setIsSearching] = useState(false)
   const [query, setQuery] = useState("");
   const [sortType, setSortType] = useState("");
   const [dishType, setdishType] = useState("all");
-
+  const [refreshing, setRefreshing] = useState(false);
   const [view, setView] = useState("List");
   const [viewIcon, setViewIcon] = useState("list");
 
@@ -57,13 +60,17 @@ const Search = ({ navigation, route }) => {
   const debouncedSearch = useCallback(
     debounce((text) => {
       dispatch(getSearchDishes(text, sortType, dishType));
-    }, 300),
+    }, 200),
     [dispatch, sortType, dishType]
   );
 
-  const [refreshing, setRefreshing] = useState(false);
   const onRefresh = () => {
     setRefreshing(true);
+  };
+
+  const handleBack = () => {
+    setIsSearching(false);
+    Keyboard.dismiss();
   };
 
   useEffect(() => {
@@ -148,9 +155,11 @@ const Search = ({ navigation, route }) => {
             </TouchableOpacity>
           )}
           <View className="bg-white px-3 flex-row flex-1 justify-start items-center border border-slate-200 rounded-md focus:border-slate-300 focus:shadow-lg focus:shadow-slate-600 shadow-md shadow-slate-500">
-            <TouchableOpacity className="">
+            {isSearching ? <TouchableOpacity onPress={handleBack} className="">
+              <Ionicons name="chevron-back-circle" color="#c0c0c0" size={25} />
+            </TouchableOpacity> : <TouchableOpacity className="">
               <Ionicons name="search" color="#c0c0c0" size={25} />
-            </TouchableOpacity>
+            </TouchableOpacity>}
             <TextInput
               className="bg-white flex-1 px-2 py-2 shadow-lg text-base"
               placeholder="Dishes and Chefs"
@@ -159,19 +168,24 @@ const Search = ({ navigation, route }) => {
               inputMode="search"
               value={query}
               onChangeText={handleQuery}
+              autoFocus={isSearching}
+              onFocus={()=>setIsSearching(true)}
             />
+            {query !== '' && <TouchableOpacity onPress={()=>setQuery('')} className="">
+              <Ionicons name="close-circle" color="#c0c0c0" size={25} />
+            </TouchableOpacity>}
           </View>
           <TouchableOpacity
             onPress={() =>
               navigation.navigate("Filter", { sortType, dishType })
             }
-            className="items-center justify-center p-2 rounded-md bg-white shadow shadow-black border border-slate-200"
+            className={`items-center justify-center p-2 rounded-md bg-white shadow shadow-black border border-slate-200 ${isSearching && 'hidden'}`}
           >
             <Ionicons name="options-outline" color="#252626" size={25} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={handleView}
-            className="items-center justify-center p-2 rounded-md bg-white shadow shadow-black border border-slate-200"
+            className={`items-center justify-center p-2 rounded-md bg-white shadow shadow-black border border-slate-200 ${isSearching && 'hidden'}`}
           >
             <Ionicons name={viewIcon} color="#252626" size={25} />
           </TouchableOpacity>
