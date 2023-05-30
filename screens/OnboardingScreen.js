@@ -1,6 +1,7 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
 import Onboarding from "react-native-onboarding-swiper";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const OnboardingScreen = ({ navigation }) => {
   const DotComponent = ({ selected }) => {
@@ -41,10 +42,20 @@ const OnboardingScreen = ({ navigation }) => {
     );
   };
 
+  const onSkip = async () => {
+    await AsyncStorage.setItem('onBoarded', JSON.stringify('true'))
+    navigation.navigate("UserTabNavigation", { screen: "Home" })
+  }
+
+  const onDone = async () => {
+    await AsyncStorage.setItem('onBoarded', JSON.stringify('true'))
+    navigation.navigate("UserTabNavigation", { screen: "Home" })
+  }
+
   return (
     <Onboarding
-      onSkip={() => navigation.navigate("BottomTab", { screen: "Home" })}
-      onDone={() => navigation.navigate("BottomTab", { screen: "Home" })}
+      onSkip={onSkip}
+      onDone={onDone}
       DotComponent={DotComponent}
       SkipButtonComponent={Skip}
       NextButtonComponent={Next}
