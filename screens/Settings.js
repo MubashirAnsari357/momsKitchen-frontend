@@ -41,7 +41,7 @@ const Settings = () => {
             <Ionicons name="log-in-outline" color="#262525" size={25} />
             <Text className="font-semibold text-xl">Login</Text>
             <Text className="text-sm">to your existing account</Text>
-            <View className="w-full pl-36 mt-2">
+            <View className="flex-1 items-end mt-2">
               <Ionicons name="chevron-forward-outline" color="#262525" size={25} />
             </View>
           </TouchableOpacity> :
@@ -49,7 +49,7 @@ const Settings = () => {
               <Ionicons name="person-circle-outline" color="#262525" size={25} />
               <Text className="font-semibold text-xl">Profile</Text>
               <Text className="text-sm">Edit your profile</Text>
-              <View className="w-full pl-36 mt-2">
+              <View className="flex-1 items-end mt-2">
                 <Ionicons name="chevron-forward-outline" color="#262525" size={25} />
               </View>
             </TouchableOpacity>}
@@ -57,7 +57,7 @@ const Settings = () => {
             <Ionicons name="log-in-outline" color="#262525" size={25} />
             <Text className="font-semibold text-xl">Signup as Chef</Text>
             <Text className="text-sm">Create an account</Text>
-            <View className="w-full pl-36 mt-2">
+            <View className="flex-1 items-end mt-2">
               <Ionicons name="chevron-forward-outline" color="#262525" size={25} />
             </View>
           </TouchableOpacity>
