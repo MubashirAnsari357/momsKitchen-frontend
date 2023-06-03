@@ -37,7 +37,6 @@ const UserStackNavigation = () => {
   useEffect(() => {
     const checkOnBoardStatus = async () => {
       const status = await AsyncStorage.getItem("onBoarded");
-      console.log(status)
       if (status !== null) {
         setOnBoardedStatus(true);
       }

@@ -16,7 +16,7 @@ const BasketDish = ({ basketItems, onAddItem, onDecrementQuantity, onRemoveItem 
           <View key={item._id}>
             <View className="flex-row mx-4 my-1 bg-white w-max items-center rounded-2xl shadow shadow-black">
               <TouchableOpacity
-                onPress={() => navigation.navigate("DishDetails", {})}
+                onPress={() => navigation.navigate("DishDetails", { _id })}
                 className="w-28 h-28 mr-4 rounded-l-2xl bg-white"
               >
                 <Image
