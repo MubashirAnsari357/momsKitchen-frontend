@@ -1,6 +1,6 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import { StatusBar } from "react-native";
 import { loadUser } from "./redux/actions/userAction";
 import UserStackNavigation from "./navigation/UserStackNavigation";
 import ChefStackNavigation from "./navigation/ChefStackNavigation";
@@ -19,6 +19,7 @@ const Main = () => {
 
   return (
     <>
+    <StatusBar barStyle="dark-content" backgroundColor="white" />
     {!isAuthenticated || isAuthenticated === undefined ? <UserStackNavigation /> :
       (isAuthenticated && user?.userType == "Chef") ? (
         <ChefStackNavigation />
