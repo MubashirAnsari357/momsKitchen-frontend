@@ -18,7 +18,7 @@ const DishesList = ({ view, dishes, refreshing, onRefresh, chef }) => {
   };
 
   const getChefProfileHeader = () => {
-    const { name, address, email, photo, chefSpecialization } = chef;
+    const { name, address, email, photo, chefSpecialization, verified } = chef;
     return (
       <>
         <View className="justify-center items-center my-2">
@@ -31,7 +31,7 @@ const DishesList = ({ view, dishes, refreshing, onRefresh, chef }) => {
           <View className="items-center justify-center">
             <View className="flex-row justify-center items-center space-x-2">
               <Text className="text-xl font-bold ">{name}</Text>
-              <MaterialIcons name="verified" color="#5262525" size={25}/>
+              {verified && <MaterialIcons name="verified" color="#262525" size={25}/>}
             </View>
             <Text className="text-gray-500">{email}</Text>
             <Text className="text-gray-500">

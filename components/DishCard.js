@@ -144,7 +144,7 @@ const DishCard = ({ dish, view }) => {
               feedbackCount,
             })
           }
-          className="m-1 bg-white active:bg-gray-100 flex-1 items-center justify-start rounded-3xl shadow shadow-black"
+          className="m-1 bg-white active:bg-gray-100 w-[46.5vw] items-center justify-start rounded-3xl shadow shadow-black"
         >
           <View className="w-40 h-40 mt-3 rounded-3xl bg-white shadow-xl shadow-slate-500">
             <Image

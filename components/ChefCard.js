@@ -14,6 +14,7 @@ const ChefCard = ({ chef, view }) => {
     photo,
     chefSpecialization,
     userType,
+    verified,
   } = chef;
   return (
     <>
@@ -32,6 +33,7 @@ const ChefCard = ({ chef, view }) => {
               photo,
               chefSpecialization,
               userType,
+              verified,
             })
           } className="w-24 h-24 mt-4 rounded-full z-50 bg-white active:bg-gray-100 shadow-md shadow-black">
             <Image
@@ -49,6 +51,7 @@ const ChefCard = ({ chef, view }) => {
               photo,
               chefSpecialization,
               userType,
+              verified,
             })
           } className="absolute top-16 bg-white active:bg-gray-100 items-center rounded-2xl w-36 justify-center pb-3 shadow shadow-black">
             <Text className="pt-16 font-semibold text-[#262525] text-base text-center">
@@ -70,6 +73,7 @@ const ChefCard = ({ chef, view }) => {
               photo,
               chefSpecialization,
               userType,
+              verified,
             })
           }
           className="flex-row flex-1 mx-4 my-1 bg-white active:bg-gray-100 justify-between items-center rounded-2xl shadow shadow-black py-2 hover:scale-105"
@@ -100,9 +104,10 @@ const ChefCard = ({ chef, view }) => {
               photo,
               chefSpecialization,
               userType,
+              verified,
             })
           }
-          className="mx-1 bg-white flex-1 my-1 items-center justify-center rounded-2xl shadow shadow-black"
+          className="mx-1 bg-white w-[31vw] my-1 items-center justify-center rounded-2xl shadow shadow-black"
         >
           <Image
             source={{ uri: photo.url }}

@@ -284,6 +284,7 @@ const DishDetails = () => {
                   photo: Dish.chef.photo,
                   chefSpecialization: Dish.chef.chefSpecialization,
                   userType: Dish.chef.userType,
+                  verified: Dish.chef.verified
                 })
               }
               className="flex-row items-center space-x-4 py-2 active:bg-gray-100 active:-mx-6 active:px-6"
@@ -294,7 +295,7 @@ const DishDetails = () => {
               />
               <View className="flex-row justify-center items-center space-x-2">
                 <Text className="font-medium text-lg">{Dish.chef.name}</Text>
-                <MaterialIcons name="verified" color="#5262525" size={17} />
+                {Dish.chef.verified && <MaterialIcons name="verified" color="#262525" size={17} />}
               </View>
             </TouchableOpacity>
 

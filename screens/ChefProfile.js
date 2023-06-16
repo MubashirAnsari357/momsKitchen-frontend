@@ -11,7 +11,7 @@ const ChefProfile = () => {
   const navigation = useNavigation();
 
   const {
-    params: { _id, name, address, email, photo, chefSpecialization },
+    params: { _id, name, address, email, photo, chefSpecialization, verified },
   } = useRoute();
 
   const { dishes } = useSelector((state) => state.dishes);
@@ -74,6 +74,7 @@ const ChefProfile = () => {
               email,
               photo,
               chefSpecialization,
+              verified
             }}
             refreshing={refreshing}
             onRefresh={onRefresh}

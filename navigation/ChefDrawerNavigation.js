@@ -9,6 +9,7 @@ import {
 import ChefHome from "../screens/ChefHome";
 import ChefSettings from "../screens/ChefSettings";
 import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import Toast from "react-native-toast-message";
 import { logout } from "../redux/actions/userAction";
@@ -50,7 +51,10 @@ const ChefDrawerNavigation = () => {
             </TouchableOpacity>
           </View>
           <View className="">
-            <Text className="font-semibold text-lg -mb-2">{user?.name}</Text>
+            <View className="flex-row items-center -mb-2 space-x-2">
+            <Text className="font-semibold text-lg">{user?.name}</Text>
+            {user?.verified && <MaterialIcons name="verified" color="#262525" size={20}/>}
+            </View>
             <Text className="font-thin text-base text-slate-600">
               {user?.email}
             </Text>
