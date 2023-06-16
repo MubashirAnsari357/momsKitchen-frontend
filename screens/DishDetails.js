@@ -1,6 +1,14 @@
-import { View, Text, ScrollView, Image, TouchableOpacity, RefreshControl } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  TouchableOpacity,
+  RefreshControl,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import ReadMore from "@fawazahmed/react-native-read-more";
 import Dishes from "../components/Dishes";
@@ -15,7 +23,6 @@ import { API_URL } from "@env";
 import { ratingCalc, starsCalc } from "../utils/helper";
 
 const DishDetails = () => {
-  
   const navigation = useNavigation();
 
   const {
@@ -42,7 +49,9 @@ const DishDetails = () => {
   const [emptyStars, setEmptyStars] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
   const [userFeedback, setUserFeedback] = useState(null);
-  const [initialRecommendDishes, setInitialRecommendDishes] = useState(dishes?.Dishes || []);
+  const [initialRecommendDishes, setInitialRecommendDishes] = useState(
+    dishes?.Dishes || []
+  );
   const [recommendDishes, setRecommendDishes] = useState(dishes?.Dishes || []);
 
   // Image Scroll
@@ -60,7 +69,6 @@ const DishDetails = () => {
 
   // Fetch Ratings and Stars calculations
   const fetchCalculations = (feedbacks) => {
-
     const { feedbackCountCalc, reviewsCountCalc, avgRatingCalc } =
       ratingCalc(feedbacks);
     setFeedbackCount(feedbackCountCalc);
@@ -77,7 +85,7 @@ const DishDetails = () => {
     setHasHalfStar(hasHalfStarCalc);
     setEmptyStars(emptyStarsCalc);
     setRatings(updatedRatingsCalc);
-  }
+  };
 
   // Axios Get Dish Details
   const fetchDishDetails = async (dishId) => {
@@ -88,18 +96,16 @@ const DishDetails = () => {
     setDish(dish);
     setFeedbacks(dish.feedbacks);
     setUserFeedback(
-      dish.feedbacks.find(
-        (feedback) => feedback.customer._id === user?._id
-      )
+      dish.feedbacks.find((feedback) => feedback.customer._id === user?._id)
     );
 
     const recommendedDishes = initialRecommendDishes.filter(
       (item) => item.type === dish.type && item._id !== dishId
-    )
+    );
     setRecommendDishes(recommendedDishes);
 
     fetchCalculations(dish.feedbacks);
-    
+
     setLoading(false);
   };
 
@@ -107,10 +113,7 @@ const DishDetails = () => {
   useEffect(() => {
     fetchDishDetails(_id);
     setRefreshing(false);
-  }, [
-    _id,
-    refreshing,
-  ]);
+  }, [_id, refreshing]);
 
   // Add To Cart - Dispatch
   const addToCart = async () => {
@@ -132,36 +135,38 @@ const DishDetails = () => {
 
   return (
     <SafeAreaView className="flex-1 bg-slate-50">
-      {!loading && <View className="absolute bottom-10 z-50 w-full">
-        {isAuthenticated && user?.userType == "Chef" ? (
-          <View />
-        ) : items.findIndex((item) => item._id === _id) !== -1 ? (
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Basket")}
-            className={`flex-row justify-center space-x-2 items-center p-3 mx-6 rounded-2xl bg-[#5E72EB] shadow shadow-black ${
-              Dish?.availableQty < 1 && "opacity-0"
-            }`}
-          >
-            <Ionicons name="cart" color="white" size={25} />
-            <Text className="text-center font-semibold text-white text-lg">
-              Go to Cart
-            </Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            disabled={Dish?.availableQty < 1}
-            onPress={addToCart}
-            className={`flex-row justify-center space-x-2 items-center p-3 mx-6 rounded-2xl bg-[#5E72EB] shadow shadow-black ${
-              Dish?.availableQty < 1 && "opacity-0"
-            }`}
-          >
-            <Ionicons name="cart" color="white" size={25} />
-            <Text className="text-center font-semibold text-white text-lg">
-              Add to Basket
-            </Text>
-          </TouchableOpacity>
-        )}
-      </View>}
+      {!loading && (
+        <View className="absolute bottom-10 z-50 w-full">
+          {isAuthenticated && user?.userType == "Chef" ? (
+            <View />
+          ) : items.findIndex((item) => item._id === _id) !== -1 ? (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Basket")}
+              className={`flex-row justify-center space-x-2 items-center p-3 mx-6 rounded-2xl bg-[#5E72EB] shadow shadow-black ${
+                Dish?.availableQty < 1 && "opacity-0"
+              }`}
+            >
+              <Ionicons name="cart" color="white" size={25} />
+              <Text className="text-center font-semibold text-white text-lg">
+                Go to Cart
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              disabled={Dish?.availableQty < 1}
+              onPress={addToCart}
+              className={`flex-row justify-center space-x-2 items-center p-3 mx-6 rounded-2xl bg-[#5E72EB] shadow shadow-black ${
+                Dish?.availableQty < 1 && "opacity-0"
+              }`}
+            >
+              <Ionicons name="cart" color="white" size={25} />
+              <Text className="text-center font-semibold text-white text-lg">
+                Add to Basket
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
       {loading ? (
         <Loading />
       ) : (
@@ -287,7 +292,10 @@ const DishDetails = () => {
                 source={{ uri: Dish.chef.photo.url }}
                 className="h-10 w-10 rounded-full b"
               />
-              <Text className="font-medium text-lg">{Dish.chef.name}</Text>
+              <View className="flex-row justify-center items-center space-x-2">
+                <Text className="font-medium text-lg">{Dish.chef.name}</Text>
+                <MaterialIcons name="verified" color="#5262525" size={17} />
+              </View>
             </TouchableOpacity>
 
             <View className="border-b border-gray-300" />

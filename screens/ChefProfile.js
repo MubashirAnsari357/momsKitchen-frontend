@@ -10,25 +10,27 @@ import Loading from "../components/Loading";
 const ChefProfile = () => {
   const navigation = useNavigation();
 
-  const [loading, setLoading] = useState(false);
   const {
-    params: {
-      _id,
-      name,
-      address,
-      email,
-      phone,
-      photo,
-      chefSpecialization,
-      userType,
-    },
+    params: { _id, name, address, email, photo, chefSpecialization },
   } = useRoute();
-  
-  const { dishes } = useSelector((state) => state.dishes);
-  
-  const [dishesChefs, setDishesChefs] = useState(dishes?.Dishes || []);
 
-  const [refreshing, setRefreshing] = useState(false)
+  const { dishes } = useSelector((state) => state.dishes);
+  const [loading, setLoading] = useState(true);
+  const [dishesChefs, setDishesChefs] = useState(dishes?.Dishes || []);
+  const [refreshing, setRefreshing] = useState(false);
+  const [view, setView] = useState("List");
+  const [viewIcon, setViewIcon] = useState("grid");
+
+  const handleView = () => {
+    if (view == "List") {
+      setView("Grid");
+      setViewIcon("list");
+    }
+    if (view == "Grid") {
+      setView("List");
+      setViewIcon("grid");
+    }
+  };
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -36,54 +38,46 @@ const ChefProfile = () => {
 
   useEffect(() => {
     setLoading(true);
-    setDishesChefs((dishesChefs) =>
-      dishesChefs.filter((item) => item.chef._id === _id)
+    setDishesChefs((prevDishes) =>
+      prevDishes.filter((item) => item.chef._id === _id)
     );
     setLoading(false);
-    setRefreshing(false)
+    setRefreshing(false);
   }, [refreshing]);
 
-
-
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <SafeAreaView className="bg-[#f4f8fc] flex-1">
-      <View className="relative bg-white h-36 mb-20 border-b border-gray-300">
-        <View className="px-6 pt-2 shadow-md flex-row space-x-4">
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            className="bg-[#e4eaf0] rounded-full w-8 h-8 justify-center items-center mt-3"
-          >
-            <Ionicons name="chevron-back-outline" color="#262525" size={25} />
-          </TouchableOpacity>
-          <View className=" justify-start p-4 rounded-xl">
-            <Text className="text-xl font-bold -mb-1">{name}</Text>
-            <Text className="text-gray-500">{address?.city}</Text>
-          </View>
-        </View>
-        <View className="absolute top-[90px] flex-row items-center">
-          <View className="ml-6 w-28 h-28 rounded-full bg-white shadow shadow-black">
-            <Image
-              source={{ uri: photo.url }}
-              className="w-28 h-28 rounded-full"
-            />
-          </View>
-          <View className="bg-white flex-1 flex-row justify-around items-center rounded-lg p-4 mx-8 shadow shadow-black">
-            <View className="items-center justify-center">
-              <Text className="font-semibold text-lg">{dishesChefs.length}</Text>
-              <Text className="text-gray-600 text-sm">Dishes</Text>
-            </View>
-            <View className="items-center justify-center">
-              <Text className="font-semibold text-lg">4.2</Text>
-              <Text className="text-gray-600 text-sm">Ratings</Text>
-            </View>
-          </View>
-        </View>
+      <View className="bg-white py-4 flex-row justify-between items-center px-6 shadow-md shadow-black z-50 space-x-4">
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          className="bg-[#e4eaf0] rounded-full w-8 h-8 justify-center items-center"
+        >
+          <Ionicons name="chevron-back-outline" color="#262525" size={25} />
+        </TouchableOpacity>
+        <Text className="text-black font-semibold text-lg flex-1">{name}</Text>
+        <TouchableOpacity onPress={handleView}>
+          <Ionicons name={viewIcon} color="#262525" size={25} />
+        </TouchableOpacity>
       </View>
       {loading ? (
         <Loading />
       ) : (
-        <View className="bg-slate-50 flex-1 w-max rounded-t-2xl shadow-lg shadow-black">
-          <Dishes view="List" dishes={dishesChefs} refreshing={refreshing} onRefresh={onRefresh}/>
+        <View className="bg-white flex-1 w-max shadow-lg shadow-black">
+          <Dishes
+            view={view}
+            dishes={dishesChefs}
+            chef={{
+              name,
+              address,
+              email,
+              photo,
+              chefSpecialization,
+            }}
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
         </View>
       )}
     </SafeAreaView>

@@ -29,7 +29,7 @@ const MyOrders = () => {
     <SafeAreaView className="flex-1 bg-white">
       <AppBar title="My Orders" />
 
-      <View className="px-2">
+      <View className="">
         {isAuthenticated ? (
           loadingO ? (
             <Loading />

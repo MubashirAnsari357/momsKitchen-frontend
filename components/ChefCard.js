@@ -18,8 +18,11 @@ const ChefCard = ({ chef, view }) => {
   return (
     <>
       {view == "homeGrid" && (
-        <TouchableOpacity
-          onPress={() =>
+        <View
+          
+          className="relative ml-4 items-center w-36 h-48 -mt-4"
+        >
+          <TouchableOpacity onPress={() =>
             navigation.navigate("ChefProfile", {
               _id,
               name,
@@ -30,22 +33,30 @@ const ChefCard = ({ chef, view }) => {
               chefSpecialization,
               userType,
             })
-          }
-          className="relative ml-4 items-center w-36 h-48 -mt-4"
-        >
-          <View className="w-24 h-24 mt-4 rounded-full z-50 bg-white shadow-md shadow-black">
+          } className="w-24 h-24 mt-4 rounded-full z-50 bg-white active:bg-gray-100 shadow-md shadow-black">
             <Image
               source={{ uri: photo.url }}
               className="w-24 h-24 rounded-full shadow-xl"
             />
-          </View>
-          <View className="absolute top-16 bg-white items-center rounded-2xl w-36 justify-center pb-3 shadow shadow-black">
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() =>
+            navigation.navigate("ChefProfile", {
+              _id,
+              name,
+              address,
+              email,
+              phone,
+              photo,
+              chefSpecialization,
+              userType,
+            })
+          } className="absolute top-16 bg-white active:bg-gray-100 items-center rounded-2xl w-36 justify-center pb-3 shadow shadow-black">
             <Text className="pt-16 font-semibold text-[#262525] text-base text-center">
             {name.slice(0, 12) + (name.length > 12 ? "..." : "")}
             </Text>
             <Text className="text-slate-500">{address?.city}</Text>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        </View>
       )}
       {view == "List" && (
         <TouchableOpacity

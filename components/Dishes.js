@@ -1,14 +1,10 @@
-import {
-  View,
-  FlatList,
-  RefreshControl,
-  Text,
-} from "react-native";
+import { View, FlatList, RefreshControl, Text, Image } from "react-native";
 import React from "react";
 import DishCard from "./DishCard";
+import { MaterialIcons } from "@expo/vector-icons";
 import { useRoute } from "@react-navigation/native";
 
-const DishesList = ({ view, dishes, refreshing, onRefresh }) => {
+const DishesList = ({ view, dishes, refreshing, onRefresh, chef }) => {
   const route = useRoute();
 
   const getDishHeader = () => {
@@ -18,6 +14,39 @@ const DishesList = ({ view, dishes, refreshing, onRefresh }) => {
           {dishes?.length} dishes
         </Text>
       </View>
+    );
+  };
+
+  const getChefProfileHeader = () => {
+    const { name, address, email, photo, chefSpecialization } = chef;
+    return (
+      <>
+        <View className="justify-center items-center my-2">
+          <View className="w-28 h-28 rounded-full bg-white shadow shadow-black">
+            <Image
+              source={{ uri: photo.url }}
+              className="w-28 h-28 rounded-full"
+            />
+          </View>
+          <View className="items-center justify-center">
+            <View className="flex-row justify-center items-center space-x-2">
+              <Text className="text-xl font-bold ">{name}</Text>
+              <MaterialIcons name="verified" color="#5262525" size={25}/>
+            </View>
+            <Text className="text-gray-500">{email}</Text>
+            <Text className="text-gray-500">
+              {address?.city + " - " + address?.pincode}
+            </Text>
+          </View>
+          <View className="flex-row space-x-2">
+            <Text className="text-base text-gray-500 font-semibold">
+              Specialization: {chefSpecialization} &bull; {dishes?.length}{" "}
+              Dishes
+            </Text>
+          </View>
+        </View>
+        <View className="border-b border-gray-300 mx-4 mb-2" />
+      </>
     );
   };
 
@@ -52,7 +81,9 @@ const DishesList = ({ view, dishes, refreshing, onRefresh }) => {
           renderItem={({ item }) => <DishCard dish={item} view={view} />}
           keyExtractor={(item) => item._id}
           numColumns={2}
-          ListHeaderComponent={getDishHeader}
+          ListHeaderComponent={
+            route.name === "ChefProfile" ? getChefProfileHeader : getDishHeader
+          }
           showsVerticalScrollIndicator={false}
         />
       )}
@@ -68,7 +99,9 @@ const DishesList = ({ view, dishes, refreshing, onRefresh }) => {
           renderItem={({ item }) => <DishCard dish={item} view={view} />}
           keyExtractor={(item) => item._id}
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={getDishHeader}
+          ListHeaderComponent={
+            route.name === "ChefProfile" ? getChefProfileHeader : getDishHeader
+          }
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
@@ -91,6 +124,5 @@ const DishesList = ({ view, dishes, refreshing, onRefresh }) => {
     </>
   );
 };
-
 
 export default DishesList;

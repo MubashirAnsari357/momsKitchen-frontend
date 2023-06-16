@@ -28,16 +28,16 @@ const Search = ({ navigation, route }) => {
   const [dishType, setdishType] = useState("all");
   const [refreshing, setRefreshing] = useState(false);
   const [view, setView] = useState("List");
-  const [viewIcon, setViewIcon] = useState("list");
+  const [viewIcon, setViewIcon] = useState("grid");
 
   const handleView = () => {
     if (view == "List") {
       setView("Grid");
-      setViewIcon("grid");
+      setViewIcon("list");
     }
     if (view == "Grid") {
       setView("List");
-      setViewIcon("list");
+      setViewIcon("grid");
     }
   };
 

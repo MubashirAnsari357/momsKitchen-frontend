@@ -34,7 +34,7 @@ const OrderDish = ({ orders, refreshing, onRefresh }) => {
             <TouchableOpacity
               key={_id}
               onPress={() => navigation.navigate("OrderDetails", { id: _id })}
-              className="flex-row my-1 w-max items-center active:bg-gray-200 rounded-2xl py-2 active:scale-105"
+              className="flex-row my-1 w-max items-center active:bg-gray-200 rounded-2xl py-2 px-2 active:scale-105"
             >
               <View className="w-24 h-24 mx-4 rounded-3xl bg-white shadow-md shadow-black">
                 <Image
