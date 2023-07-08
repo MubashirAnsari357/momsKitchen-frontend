@@ -50,7 +50,10 @@ const Home = ({ route }) => {
         {/* <Text className="text-black font-semibold text-2xl flex-1">
           Mom's Kitchen
         </Text> */}
-        <Image source={require('../assets/momsKitchen-logo.png')} className="h-10 w-44"/>
+        <Image
+          source={require("../assets/momsKitchen-logo.png")}
+          className="h-10 w-44"
+        />
         {isAuthenticated ? (
           <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
             <Ionicons name="person-circle" color="#262525" size={30} />
@@ -105,7 +108,11 @@ const Home = ({ route }) => {
           </Text>
           <Category />
           {/* HomeChefs */}
-          <TouchableOpacity className="flex-row justify-between items-center px-6 mt-5">
+          <TouchableOpacity
+            disabled={loadingA}
+            onPress={() => navigation.navigate("Chefs")}
+            className="flex-row justify-between items-center px-6 mt-5"
+          >
             <Text className="font-bold text-2xl text-[#262525]">HomeChefs</Text>
             <Ionicons
               name="chevron-forward-outline"
@@ -123,6 +130,7 @@ const Home = ({ route }) => {
 
           {/* Dishes */}
           <TouchableOpacity
+            disabled={loadingD}
             onPress={() => navigation.navigate("Dishes")}
             className="flex-row justify-between items-center px-6 mt-4"
           >

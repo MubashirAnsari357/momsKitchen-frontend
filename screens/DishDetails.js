@@ -178,7 +178,7 @@ const DishDetails = () => {
           className="relative bg-slate-50 flex-1"
         >
           <View className="relative py-2 rounded-3xl justify-between items-center">
-            <View className="w-96 h-96 relative bg-white object-contain rounded-3xl shadow-md shadow-black">
+            <View className="w-[95vw] h-[95vw] relative bg-white object-contain rounded-3xl shadow-md shadow-black">
               <ScrollView
                 className="rounded-3xl"
                 horizontal
@@ -191,7 +191,7 @@ const DishDetails = () => {
                     <Image
                       key={index}
                       source={{ uri: image.url }}
-                      className="w-96 h-96 object-contain mx-auto rounded-3xl"
+                      className="w-[95vw] h-[95vw] object-contain mx-auto rounded-3xl"
                     />
                   );
                 })}

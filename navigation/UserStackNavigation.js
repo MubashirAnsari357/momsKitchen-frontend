@@ -28,6 +28,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useState } from "react";
 import { useEffect } from "react";
 import Loading from "../components/Loading";
+import AllChefs from "../screens/Chefs";
 
 const UserStackNavigation = () => {
 
@@ -71,6 +72,15 @@ const UserStackNavigation = () => {
         <Stack.Screen
           name="Dishes"
           component={Dishes}
+          options={{
+            presentation: "fullScreenModal",
+            animation: "slide_from_right",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="Chefs"
+          component={AllChefs}
           options={{
             presentation: "fullScreenModal",
             animation: "slide_from_right",

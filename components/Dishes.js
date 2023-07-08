@@ -9,8 +9,8 @@ const DishesList = ({ view, dishes, refreshing, onRefresh, chef }) => {
 
   const getDishHeader = () => {
     return (
-      <View>
-        <Text className="px-5 text-lg font-semibold text-gray-500">
+      <View className="">
+        <Text className="px-5 text-lg font-semibold text-gray-500 text-start">
           {dishes?.length} dishes
         </Text>
       </View>
@@ -31,7 +31,9 @@ const DishesList = ({ view, dishes, refreshing, onRefresh, chef }) => {
           <View className="items-center justify-center">
             <View className="flex-row justify-center items-center space-x-2">
               <Text className="text-xl font-bold ">{name}</Text>
-              {verified && <MaterialIcons name="verified" color="#262525" size={25}/>}
+              {verified && (
+                <MaterialIcons name="verified" color="#262525" size={25} />
+              )}
             </View>
             <Text className="text-gray-500">{email}</Text>
             <Text className="text-gray-500">
@@ -67,25 +69,29 @@ const DishesList = ({ view, dishes, refreshing, onRefresh, chef }) => {
       )}
 
       {view == "Grid" && (
-        <FlatList
-          vertical
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          contentContainerStyle={{
-            paddingHorizontal: 6,
-            paddingBottom: 50,
-            paddingTop: 10,
-          }}
-          data={dishes}
-          renderItem={({ item }) => <DishCard dish={item} view={view} />}
-          keyExtractor={(item) => item._id}
-          numColumns={2}
-          ListHeaderComponent={
-            route.name === "ChefProfile" ? getChefProfileHeader : getDishHeader
-          }
-          showsVerticalScrollIndicator={false}
-        />
+        <View className="items-center">
+          <FlatList
+            vertical
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            contentContainerStyle={{
+              paddingHorizontal: 6,
+              paddingBottom: 50,
+              paddingTop: 10,
+            }}
+            data={dishes}
+            renderItem={({ item }) => <DishCard dish={item} view={view} />}
+            keyExtractor={(item) => item._id}
+            numColumns={2}
+            ListHeaderComponent={
+              route.name === "ChefProfile"
+                ? getChefProfileHeader
+                : getDishHeader
+            }
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
       )}
 
       {view == "List" && (

@@ -107,7 +107,7 @@ const ChefCard = ({ chef, view }) => {
               verified,
             })
           }
-          className="mx-1 bg-white w-[31vw] my-1 items-center justify-center rounded-2xl shadow shadow-black"
+          className="mx-1 bg-white w-[30vw] px-1 my-1 items-center justify-center rounded-2xl shadow shadow-black"
         >
           <Image
             source={{ uri: photo.url }}
@@ -115,7 +115,7 @@ const ChefCard = ({ chef, view }) => {
           />
           <View className="justify-center items-center pb-2 mt-2">
             <Text className="font-semibold text-[#262525] text-base text-center">
-            {name.slice(0, 12) + (name.length > 12 ? "..." : "")}
+            {name.slice(0, 11) + (name.length > 11 ? "..." : "")}
             </Text>
             <Text className="text-slate-500">{address?.city}</Text>
           </View>

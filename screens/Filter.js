@@ -12,7 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { categories } from "../MockData/MockData";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const Filter = ({route}) => {
+const Filter = ({ route }) => {
   const navigation = useNavigation();
 
   const sortCriteria = [
@@ -30,9 +30,15 @@ const Filter = ({route}) => {
     },
   ];
 
-  const [catList, setCatList] = useState(route?.params.dishType=='all' || !route?.params.dishType ? [] : route?.params.dishType);
-  const [sort, setSort] = useState(route?.params.sortType ? route?.params.sortType : null);
-  
+  const [catList, setCatList] = useState(
+    route?.params.dishType == "all" || !route?.params.dishType
+      ? []
+      : route?.params.dishType
+  );
+  const [sort, setSort] = useState(
+    route?.params.sortType ? route?.params.sortType : null
+  );
+
   const handleCategory = (name) => {
     if (!catList.includes(name)) {
       setCatList((catList) => [...catList, name]);
@@ -76,26 +82,24 @@ const Filter = ({route}) => {
           </View>
           <View className="">
             <Text className="text-base font-semibold">Categories: </Text>
-            <FlatList
-              vertical
-              data={categories}
-              renderItem={({ item }) => (
-                <Pressable
-                  onPress={() => handleCategory(item.name)}
-                  className={`${
-                    catList.includes(item.name) && "border-2 border-[#262525]"
-                  } bg-white flex-row items-center space-x-2 w-40 my-2 py-2 shadow-sm shadow-black rounded-md ml-2`}
-                >
-                  <Image source={item.categoryImg} className="w-7 h-7 ml-2" />
-                  <Text className="font-semibold text-[#262525] text-base">
-                    {item.name}
-                  </Text>
-                </Pressable>
-              )}
-              keyExtractor={(item) => item.name}
-              numColumns={2}
-              showsVerticalScrollIndicator={false}
-            />
+            <View className="flex-row flex-wrap ">
+              {categories.map((item) => {
+                return (
+                  <Pressable
+                    key={item.name}
+                    onPress={() => handleCategory(item.name)}
+                    className={`${
+                      catList.includes(item.name) && "border-2 border-[#262525]"
+                    } bg-white flex-row items-center space-x-2 w-[40vw] my-2 py-2 shadow-sm shadow-black rounded-md ml-2`}
+                  >
+                    <Image source={item.categoryImg} className="w-7 h-7 ml-2" />
+                    <Text className="font-semibold text-[#262525] text-base">
+                      {item.name}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </View>
           </View>
         </View>
       </SafeAreaView>

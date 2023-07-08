@@ -101,14 +101,12 @@ const Search = ({ navigation, route }) => {
         {loadingD ? (
           <Loading />
         ) : (
-          <View className="">
             <DishesList
               view={view}
               dishes={searchDishes?.Dishes}
               refreshing={refreshing}
               onRefresh={onRefresh}
             />
-          </View>
         )}
       </>
     );

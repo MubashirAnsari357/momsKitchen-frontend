@@ -32,7 +32,8 @@ const DishCard = ({ dish, view }) => {
   } = dish;
 
   useEffect(() => {
-    const { feedbackCountCalc, reviewsCountCalc, avgRatingCalc } = ratingCalc(feedbacks);
+    const { feedbackCountCalc, reviewsCountCalc, avgRatingCalc } =
+      ratingCalc(feedbacks);
     setFeedbackCount(feedbackCountCalc);
     setReviewsCount(reviewsCountCalc);
     setAvgRating(avgRatingCalc);
@@ -76,7 +77,7 @@ const DishCard = ({ dish, view }) => {
               feedbackCount,
             })
           }
-          className="ml-4 my-1 bg-white active:bg-gray-100 w-48 items-center justify-start rounded-3xl shadow shadow-black"
+          className="ml-4 my-1 bg-white active:bg-gray-100 w-max px-3 items-center justify-start rounded-3xl shadow shadow-black"
         >
           <View className="w-40 h-40 mt-3 rounded-3xl bg-white shadow-xl shadow-slate-500">
             <Image
@@ -102,7 +103,7 @@ const DishCard = ({ dish, view }) => {
               </Text>
               {!isChef && (
                 <TouchableOpacity
-                disabled={availableQty<1}
+                  disabled={availableQty < 1}
                   onPress={() =>
                     addToBasket(
                       _id,
@@ -113,7 +114,9 @@ const DishCard = ({ dish, view }) => {
                       photos[0].url
                     )
                   }
-                  className={`bg-[#5E72EB] rounded-full items-centers justify-center w-10 h-10 shadow shadow-black ${availableQty < 1 && "opacity-0"}`}
+                  className={`bg-[#5E72EB] rounded-full items-centers justify-center w-10 h-10 shadow shadow-black ${
+                    availableQty < 1 && "opacity-0"
+                  }`}
                 >
                   <View className="justify-center items-center">
                     <Ionicons name="add" color="white" size={30} />
@@ -126,71 +129,73 @@ const DishCard = ({ dish, view }) => {
       )}
 
       {view == "Grid" && (
-        <Pressable
-          onPress={() =>
-            navigation.navigate("DishDetails", {
-              _id,
-              chef,
-              name,
-              desc,
-              cuisine,
-              availableQty,
-              type,
-              price,
-              photos,
-              feedbacks,
-              avgRating,
-              reviewsCount,
-              feedbackCount,
-            })
-          }
-          className="m-1 bg-white active:bg-gray-100 w-[46.5vw] items-center justify-start rounded-3xl shadow shadow-black"
-        >
-          <View className="w-40 h-40 mt-3 rounded-3xl bg-white shadow-xl shadow-slate-500">
-            <Image
-              source={{ uri: photos[0].url }}
-              className="w-40 h-40 rounded-3xl"
-            />
-          </View>
-          <View className="justify-start my-3 w-36">
-            <Text className="font-semibold text-[#262525] text-base">
-              {name.slice(0, 17) + (name.length > 15 ? "..." : "")}
-            </Text>
-            <View className="flex-row space-x-1 justify-start items-center">
-              <Ionicons name="star" color="#FFDD43" size={15} />
-              <Text className="font-bold text-[#262525]">{avgRating}</Text>
-              <Text className="text-xs font-bold text-gray-500">{`(${reviewsCount} Reviews)`}</Text>
+          <Pressable
+            onPress={() =>
+              navigation.navigate("DishDetails", {
+                _id,
+                chef,
+                name,
+                desc,
+                cuisine,
+                availableQty,
+                type,
+                price,
+                photos,
+                feedbacks,
+                avgRating,
+                reviewsCount,
+                feedbackCount,
+              })
+            }
+            className="m-1 bg-white active:bg-gray-100 px-3 items-center justify-center rounded-3xl shadow shadow-black"
+          >
+            <View className="w-[40vw] h-[40vw] mt-3 rounded-3xl bg-white shadow-xl shadow-slate-500">
+              <Image
+                source={{ uri: photos[0].url }}
+                className="w-[40vw] h-[40vw] rounded-3xl"
+              />
             </View>
-            <Text className="text-slate-500 mt-1">
-              {chef.name.slice(0, 15) + (chef.name.length > 15 ? "..." : "")}
-            </Text>
-            <View className="flex-row justify-between">
-              <Text className="pt-2 font-bold text-2xl text-[#262525]">
-                ₹{price}
+            <View className="justify-start my-3 w-full px-2">
+              <Text className="font-semibold text-[#262525] text-base">
+                {name.slice(0, 17) + (name.length > 15 ? "..." : "")}
               </Text>
-              {!isChef && (
-                <TouchableOpacity
-                disabled={availableQty<1}
-                  onPress={() =>
-                    addToBasket(
-                      _id,
-                      name,
-                      chef.name,
-                      chef._id,
-                      price,
-                      photos[0].url
-                    )
-                  }
-                  className={`bg-[#5E72EB] rounded-full items-centers justify-center w-10 h-10 shadow shadow-black ${availableQty < 1 && "opacity-0"}`}
-                >
-                  <View className="justify-center items-center">
-                    <Ionicons name="add" color="white" size={30} />
-                  </View>
-                </TouchableOpacity>
-              )}
+              <View className="flex-row space-x-1 justify-start items-center">
+                <Ionicons name="star" color="#FFDD43" size={15} />
+                <Text className="font-bold text-[#262525]">{avgRating}</Text>
+                <Text className="text-xs font-bold text-gray-500">{`(${reviewsCount} Reviews)`}</Text>
+              </View>
+              <Text className="text-slate-500 mt-1">
+                {chef.name.slice(0, 15) + (chef.name.length > 15 ? "..." : "")}
+              </Text>
+              <View className="flex-row justify-between">
+                <Text className="pt-2 font-bold text-2xl text-[#262525]">
+                  ₹{price}
+                </Text>
+                {!isChef && (
+                  <TouchableOpacity
+                    disabled={availableQty < 1}
+                    onPress={() =>
+                      addToBasket(
+                        _id,
+                        name,
+                        chef.name,
+                        chef._id,
+                        price,
+                        photos[0].url
+                      )
+                    }
+                    className={`bg-[#5E72EB] rounded-full items-centers justify-center w-10 h-10 shadow shadow-black ${
+                      availableQty < 1 && "opacity-0"
+                    }`}
+                  >
+                    <View className="justify-center items-center">
+                      <Ionicons name="add" color="white" size={30} />
+                    </View>
+                  </TouchableOpacity>
+                )}
+              </View>
             </View>
-          </View>
-        </Pressable>
+          </Pressable>
       )}
 
       {view == "List" && (
@@ -212,7 +217,7 @@ const DishCard = ({ dish, view }) => {
               feedbackCount,
             })
           }
-          className="flex-row my-1 mx-4 bg-white active:bg-gray-100 w-max items-center rounded-2xl shadow shadow-black py-2 hover:scale-105"
+          className="flex-row my-1 mx-4 bg-white active:bg-gray-100 items-center rounded-2xl shadow shadow-black py-2 hover:scale-105"
         >
           <View className="w-24 h-24 mx-4 rounded-3xl bg-white shadow-md shadow-black">
             <Image
@@ -245,7 +250,7 @@ const DishCard = ({ dish, view }) => {
               </Text>
               {!isChef && (
                 <TouchableOpacity
-                disabled={availableQty<1}
+                  disabled={availableQty < 1}
                   onPress={() =>
                     addToBasket(
                       _id,
@@ -256,7 +261,9 @@ const DishCard = ({ dish, view }) => {
                       photos[0].url
                     )
                   }
-                  className={`bg-[#5E72EB] rounded-xl flex-row items-center justify-center py-2 px-3 space-x-1 shadow shadow-black ${availableQty < 1 && "opacity-0"}`}
+                  className={`bg-[#5E72EB] rounded-xl flex-row items-center justify-center py-2 px-3 space-x-1 shadow shadow-black ${
+                    availableQty < 1 && "opacity-0"
+                  }`}
                 >
                   <Ionicons name="cart" color="white" size={15} />
                   <Text className="font-bold text-sm text-white">Add</Text>
@@ -274,7 +281,7 @@ const DishCard = ({ dish, view }) => {
               _id,
             })
           }
-          className="ml-3 my-1 bg-white w-36 items-center justify-start rounded-3xl shadow shadow-black"
+          className="ml-3 my-1 bg-white w-max px-1 items-center justify-start rounded-3xl shadow shadow-black"
         >
           <View className="w-32 h-32 mt-3 rounded-3xl bg-white shadow-xl shadow-slate-500">
             <Image
@@ -302,7 +309,7 @@ const DishCard = ({ dish, view }) => {
               </Text>
               {!isChef && (
                 <TouchableOpacity
-                disabled={availableQty<1}
+                  disabled={availableQty < 1}
                   onPress={() =>
                     addToBasket(
                       _id,
@@ -313,7 +320,9 @@ const DishCard = ({ dish, view }) => {
                       photos[0].url
                     )
                   }
-                  className={`bg-[#5E72EB] rounded-full items-centers justify-center w-9 h-9 shadow shadow-black ${availableQty < 1 && "opacity-0"}`}
+                  className={`bg-[#5E72EB] rounded-full items-centers justify-center w-9 h-9 shadow shadow-black ${
+                    availableQty < 1 && "opacity-0"
+                  }`}
                 >
                   <View className="justify-center items-center">
                     <Ionicons name="add" color="white" size={25} />
